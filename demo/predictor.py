@@ -45,6 +45,7 @@ class VisualizationDemo(object):
             predictions (dict): the output of the model.
             vis_output (VisImage): the visualized image output.
         """
+        vect_semantics=[]
         vis_output = None
         predictions = self.predictor(image)
         # Convert image from OpenCV BGR format to Matplotlib RGB format.
@@ -52,9 +53,7 @@ class VisualizationDemo(object):
         visualizer = Visualizer(image, self.metadata, instance_mode=self.instance_mode)
         if "panoptic_seg" in predictions:
             panoptic_seg, segments_info = predictions["panoptic_seg"]
-            vis_output = visualizer.draw_panoptic_seg_predictions(
-                panoptic_seg.to(self.cpu_device), segments_info
-            )
+            vis_output, vect_semantics = visualizer.draw_panoptic_seg_predictions(panoptic_seg.to(self.cpu_device), segments_info)
         else:
             if "sem_seg" in predictions:
                 vis_output = visualizer.draw_sem_seg(
@@ -64,7 +63,7 @@ class VisualizationDemo(object):
                 instances = predictions["instances"].to(self.cpu_device)
                 vis_output = visualizer.draw_instance_predictions(predictions=instances)
 
-        return predictions, vis_output
+        return predictions, vis_output, vect_semantics
 
     def _frame_from_video(self, video):
         while video.isOpened():
@@ -89,9 +88,7 @@ class VisualizationDemo(object):
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             if "panoptic_seg" in predictions:
                 panoptic_seg, segments_info = predictions["panoptic_seg"]
-                vis_frame = video_visualizer.draw_panoptic_seg_predictions(
-                    frame, panoptic_seg.to(self.cpu_device), segments_info
-                )
+                vis_frame = video_visualizer.draw_panoptic_seg_predictions(frame, panoptic_seg.to(self.cpu_device), segments_info)
             elif "instances" in predictions:
                 predictions = predictions["instances"].to(self.cpu_device)
                 vis_frame = video_visualizer.draw_instance_predictions(frame, predictions)
