@@ -331,8 +331,10 @@ def get_metadata():
     # visualization function in D2 handles thing and class classes differently
     # due to some heuristic used in Panoptic FPN. We keep the same naming to
     # enable reusing existing visualization functions.
-    thing_classes = [k["name"] for k in ADE20K_150_CATEGORIES if k["isthing"] == 1]
-    thing_colors = [k["color"] for k in ADE20K_150_CATEGORIES if k["isthing"] == 1]
+    thing_classes = [k["name"] for k in ADE20K_150_CATEGORIES]
+    thing_colors = [k["color"] for k in ADE20K_150_CATEGORIES]
+    #thing_classes = [k["name"] for k in ADE20K_150_CATEGORIES if k["isthing"] == 1]
+    #thing_colors = [k["color"] for k in ADE20K_150_CATEGORIES if k["isthing"] == 1]
     stuff_classes = [k["name"] for k in ADE20K_150_CATEGORIES]
     stuff_colors = [k["color"] for k in ADE20K_150_CATEGORIES]
 
