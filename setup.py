@@ -6,7 +6,7 @@ setup(name='Mask2Former',
       author='Federico Rollo',
       author_email='rollo.f96@gmail.com',
       url='https://github.com/robolableonardo/Mask2Former',
-      install_requires=['torch==1.9.0', 'torchvision==0.10.0','cython', 'scipy', 'shapely', 'timm', 'h5py', 'submitit', 'scikit-image'],
+      install_requires=['torch>=1.9.0', 'torchvision>=0.10.0','cython', 'scipy', 'shapely', 'timm', 'h5py', 'submitit', 'scikit-image'],
       packages=find_packages(),
       keywords=[
           'Instance Segmentation',
